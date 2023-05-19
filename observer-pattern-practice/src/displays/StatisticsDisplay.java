@@ -9,6 +9,7 @@ public class StatisticsDisplay implements Observer, Display{
 	private float avg;
 	private float min;
 	private float max;
+	private float temperatureSum;
 	private WeatherData weatherData;
 	
 	public StatisticsDisplay(WeatherData weatherData){
@@ -18,20 +19,11 @@ public class StatisticsDisplay implements Observer, Display{
 ;
 	@Override
 	public void display() {
-		float tempMax = 0.0f;
-		float tempMin = 0.0f;
-		tempMax = Math.max(temperature,this.max);
-		this.max = tempMax;		
+		this.avg = averageTemp();
+		this.max = maxTemp();
+		this.min = minTemp();
 		
-		if(min != 0.0f){
-			tempMin = Math.min(temperature, min);
-			this.min = tempMin;
-		}else{
-			tempMin = Math.min(temperature, max);
-			this.min = tempMin;
-		}
-		
-		System.out.println("Avg/Min/Max temperature = " + min + "/" + max);
+		System.out.println("Avg/Max/Min temperature = " + avg + "/" + max + "/" + min);
 		
 	}
 
@@ -41,6 +33,38 @@ public class StatisticsDisplay implements Observer, Display{
 		display();
 	}
 	
+	
+	public float maxTemp(){
+		float tempMax = 0.0f;
+		tempMax = Math.max(temperature, max);
+		this.max = tempMax;
+		
+		return max;
+		
+	}
+	
+	public float minTemp(){
+		float tempMin = 0.0f;
+		if(min != 0.0f){
+			tempMin = Math.min(temperature, min);
+			this.min = tempMin;
+			return min;
+		}
+		tempMin = Math.min(temperature, max);
+		this.min = tempMin;
+		return min;
+	}
+	float total = 0;
+	
+	public float averageTemp(){
+
+		total++;
+		
+		this.temperatureSum += temperature;
+		this.avg = temperatureSum/total;
+		
+		return avg;
+	}
 	
 
 }
