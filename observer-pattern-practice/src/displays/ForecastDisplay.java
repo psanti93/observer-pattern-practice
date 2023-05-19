@@ -7,7 +7,6 @@ import weatherData.WeatherData;
 public class ForecastDisplay implements Observer, Display {
 	private float temperature;
 	private float humidity;
-	private float pressure;
 	private WeatherData weatherData;
 	
 	public ForecastDisplay(WeatherData weatherData){
@@ -18,16 +17,25 @@ public class ForecastDisplay implements Observer, Display {
 
 	@Override
 	public void display() {
-		System.out.println("The temperature for today is: " + temperature + "with a humidity of " + humidity + "and pressure of" + pressure);
+		String forecastPrediction = forecast();
+		System.out.println("Forecast calls for: " + forecastPrediction);
 	}
 
 	@Override
-	public void update(float temperature, float humidity, float pressure) {
-		this.temperature = temperature;
-		this.humidity = humidity;
-		this.pressure = pressure;
+	public void update() {
+		this.temperature = weatherData.getTemperature();
+		this.humidity = weatherData.getHumidity();
 		display();
 		
 	}
-
+	
+	public String forecast(){
+		
+		if(temperature <= 80.0 && humidity < 70.0){
+			return "Improving weather on the way";
+		}else if(temperature > 80.0 && humidity < 90.0){
+			return "Watch out for cooler, rainy weather";
+		}	
+		return "More of the same";
+	}
 }

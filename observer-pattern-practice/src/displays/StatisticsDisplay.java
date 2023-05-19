@@ -23,13 +23,13 @@ public class StatisticsDisplay implements Observer, Display{
 		this.max = maxTemp();
 		this.min = minTemp();
 		
-		System.out.println("Avg/Max/Min temperature = " + avg + "/" + max + "/" + min);
+		System.out.println("Avg/Max/Min temperature = " + avg + "/" + max + "/" + min );
 		
 	}
 
 	@Override
-	public void update(float temperature, float humidity, float pressure) {
-		this.temperature = temperature;
+	public void update() {
+		this.temperature = weatherData.getTemperature();
 		display();
 	}
 	
@@ -54,12 +54,13 @@ public class StatisticsDisplay implements Observer, Display{
 		this.min = tempMin;
 		return min;
 	}
+	
+	
 	float total = 0;
 	
 	public float averageTemp(){
 
-		total++;
-		
+		total++;		
 		this.temperatureSum += temperature;
 		this.avg = temperatureSum/total;
 		
