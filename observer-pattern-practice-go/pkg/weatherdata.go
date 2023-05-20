@@ -5,3 +5,15 @@ type WeatherData struct {
 	humidity    float64
 	pressure    float64
 }
+
+func (w *WeatherData) RegisterObserver() {
+
+}
+
+func (w *WeatherData) RemoveObserver() {
+
+}
+
+func (w *WeatherData) NotifyObservers() {
+
+}
